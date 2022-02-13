@@ -1,0 +1,11 @@
+.project
+*/target/
+**/.settings/
+**/.factorypath
+**/.classpath
+/.metadata/
+*.iml
+.idea
+**/bin/
+**/.apt_generated/
+/target/
