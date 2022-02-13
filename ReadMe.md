@@ -19,7 +19,7 @@
  Siddhi是许多学术研究项目的基础，被引用超过 60 次。     
  
 ### siddhi 架构图  
-![Image text](https://siddhi.io/images/siddhi-overview.png)
+![Image text](docs/images/siddhi-overview.png)
 
 ### 相关资料链接:  
  官网： https://siddhi.io/  
@@ -30,7 +30,9 @@
  
 ## 具体案例分析（数据推送-过滤）
  从上游Kafka中拉取数据，根据订阅的数据规则生成siddhi-sql进行查询过滤，最终推送至具体业务方  
-
+ 整体流程如下图： 
+ ![Image text](docs/images/siddhi-sql process.png)  
+ 
 ### kafka 数据结构:
 ```json
 {
