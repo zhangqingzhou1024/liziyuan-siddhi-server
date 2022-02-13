@@ -1,6 +1,5 @@
 package com.liziyuan.hope.siddhi.stream;
 
-import com.alibaba.fastjson.JSON;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.event.Event;
@@ -58,13 +57,13 @@ public class StreamFilterProcessor {
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("StockStream");
         for (int i = 0; i < MAX_SOURCE_DATA_SIZE; i++) {
             String sourceData = getSourceData(i);
-            String jsonString = JSON.toJSONString(sourceData);
             Object[] data = {sourceData};
             inputHandler.send(data);
             Thread.sleep(500);
         }
 
         Thread.sleep(20000);
+
         // Shutting down the runtime & Siddhi
         siddhiAppRuntime.shutdown();
         siddhiManager.shutdown();

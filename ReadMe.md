@@ -45,15 +45,12 @@
     "version": "1.4.0.Final",
     "connector": "postgresql",
     "name": "jdbc_storage",
-    "ts_ms": 1644393616714,
-    "snapshot": "false",
     "db": "jdbc_storage",
     "schema": "asd_cim",
     "table": "asd_0209",
     "txId": 1492299,
     "lsn": 797800384,
     "xmin": null,
-    "type": "MSG_DATA_BIZ",
     "src_type": "POSTGRESQL",
     "table_name": "domain.student"
   },
@@ -288,7 +285,6 @@ define stream StockStream  (jsonString string);
  siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
                 @Override
                 public void receive(Event[] events) {
-                    Map<String,String> headerParams=JSON.parseObject(JSON.toJSONString(dataSubscribe.getRequestParams()), HashMap.class);
                     //判断之前的处理是否有错误
                     if(haSendException[0] ==true){
                         log.info("之前已经抛出异常");
