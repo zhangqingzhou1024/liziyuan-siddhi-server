@@ -28,25 +28,26 @@ public class StreamFilterProcessor {
 
         // Generating runtime
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
+        // Starting event processing
+        siddhiAppRuntime.start();
 
-
-        siddhiAppRuntime.addCallback("query2", new QueryCallback() {
+        // filterStreamDataQuery
+        siddhiAppRuntime.addCallback("filterStreamDataQuery", new QueryCallback() {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
-                log.info("============query2 callback============");
-                log.info("query2 callback= > {}", inEvents);
+                log.info("============filterStreamDataQuery callback============");
+                log.info("filterStreamDataQuery callback= > {}", inEvents);
             }
         });
-        // Adding callback to retrieve output events from query
+        // outputStream 过滤完的数据，看业务需求如何处理，比如 写入数据库、调接口等
         siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
             @Override
             public void receive(Event[] events) {
                 for (Event event : events) {
-                    //发送消息
                     try {
                         log.info("final data is {}", event);
                     } catch (Exception e) {
-                        log.info("发送消息：{}，异常{}", event.getData(), e.getMessage());
+                        log.info("final data：{}，exception: {}", event.getData(), e.getMessage());
                         break;
                     }
                 }
@@ -55,10 +56,6 @@ public class StreamFilterProcessor {
 
         // 数据生产者 Retrieving InputHandler to push events into Siddhi
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("StockStream");
-
-        // Starting event processing
-        siddhiAppRuntime.start();
-
         for (int i = 0; i < MAX_SOURCE_DATA_SIZE; i++) {
             String sourceData = getSourceData(i);
             String jsonString = JSON.toJSONString(sourceData);
@@ -68,10 +65,8 @@ public class StreamFilterProcessor {
         }
 
         Thread.sleep(20000);
-        // Shutting down the runtime
+        // Shutting down the runtime & Siddhi
         siddhiAppRuntime.shutdown();
-
-        // Shutting down Siddhi
         siddhiManager.shutdown();
     }
 
@@ -82,9 +77,9 @@ public class StreamFilterProcessor {
      */
     private static String getSiddhiSql() {
         String siddhiSql = "define stream StockStream  (jsonString string);\n" +
-                "@info(name = 'query1') " +
+                "@info(name = 'convertToJsonQuery') " +
                 "from StockStream select json:toObject(jsonString) as jsonObj insert into InputStream ;\n" +
-                "@info(name = 'query2') from \n" +
+                "@info(name = 'filterStreamDataQuery') from \n" +
                 "InputStream [\n" +
                 "(json:getString(jsonObj,'$.source.table_name')  =='domain.student' )\n" +
                 "and\n" +
