@@ -36,8 +36,8 @@
 {
   "payload": {
     "id": 4,
-    "gdc_create_time": null,
-    "gdc_update_time": null,
+    "create_time": null,
+    "update_time": null,
     "name": 44
   },
   "key": "9eb79285c2d649fe8f2c85f63fa29e14",
@@ -188,7 +188,7 @@ private String getSiddhiSql(JSONObject ruleJson,PdcResource pdcResource) throws 
     }
 
 
-    public String buildSingleSql(JSONObject conditioJson,PdcResource pdcResource) throws Exception {
+    public String buildSingleSql(JSONObject conditioJson,Resource pdcResource) throws Exception {
         StringBuffer sql= new StringBuffer();
         String key =conditioJson.getString("code");
         String operator =conditioJson.getString("compare");
