@@ -64,14 +64,26 @@
 ### 前端配置规则：
 
 ```json
-{"operator": "and", "sub_expression": [{"operator": "and", "sub_expression": [{"code": "id", "name": "主键", "value": "1", "compare": "eq"}]}]}
+{
+    "operator":"and",
+    "sub_expression":[
+        {
+            "operator":"and",
+            "sub_expression":[
+                {
+                    "code":"id",
+                    "name":"主键",
+                    "value":"1",
+                    "compare":"eq"
+                }
+            ]
+        }
+    ]
+}
 ```
+
 ```json
 {
-    "dataPushMethodType":"POST",
-    "dataPushUrl":"http://aa.com",
-    "isEnable":false,
-    "registerRuleList":{
         "operator":"and",
         "sub_expression":[
             {
@@ -84,7 +96,7 @@
                                 "type":"property",
                                 "code":"code",
                                 "compare":"eq",
-                                "value":"gyd"
+                                "value":"name"
                             },
                             {
                                 "type":"property",
@@ -116,13 +128,7 @@
                 "root":true
             }
         ]
-    },
-    "subscribeCode":"test-subscribe-rule",
-    "subscribeName":"test-subscribe-rule",
-    "domainCode":"ods",
-    "resourceId":8812,
-    "pullStrategy":"latest"
-}
+    }
 ```
 
 ### 根据规则构造 siddhi-sql  
